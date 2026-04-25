@@ -6,7 +6,7 @@ from random import choice, choices
 word = None
 answered = False
 
-with open("словацкий_словарь.db4.py", "r") as file:
+with open("db.py", "r") as file:
     db = eval(file.read())
 
 wordset = choices(tuple(filter(lambda x: x and db[x][0] and db[x][1]<10, db.keys())), k=10)
@@ -35,7 +35,7 @@ def next_word():
     label["text"] = word
 
 def end():
-    with open("словацкий_словарь.db4.py", "w") as file:
+    with open("db.py", "w") as file:
         file.write("{\n")
         for k, v in db.items():
             file.write(f"\t'{k}': {v},\n")
