@@ -30,6 +30,7 @@ def next_word():
     entry["bg"]="white"
     right["text"] = ""
     text.set("")
+    counter["text"] = f"{sum(1 for k, v in db.items() if k and v[0] and v[1] >= 10)} / {len(db)}"
     answered = False
     word = choice(wordset)
     label["text"] = word
@@ -43,29 +44,30 @@ def end():
     root.destroy()
 
 root = tk.Tk()
-root.geometry("700x500")
+#root.geometry("700x500")
+root.title("тренажёр словацких слов")
 
 font = Font(size=32)
 
-frame = tk.Frame(root, width=500, height=700)
-
-label = tk.Label(frame, font=font, border=32)
+label = tk.Label(root, font=font, border=32)
 
 text = tk.StringVar(root)
 
-entry = tk.Entry(frame, font=font, textvariable=text)
+entry = tk.Entry(root, font=font, textvariable=text, width=32)
 
-right = tk.Label(frame, font=font, border=32)
+right = tk.Label(root, font=font, border=32)
 
-buttonc = tk.Button(frame, command=check_word, text="check", font=font)
-buttonn = tk.Button(frame, command=next_word, text="next", font=font)
+counter = tk.Label(root, font=font, border=32, width=10)
 
-frame.pack()
-label.pack()
-entry.pack()
-right.pack()
-buttonc.pack()
-buttonn.pack()
+buttonc = tk.Button(root, command=check_word, text="проверить", font=font, width=10)
+buttonn = tk.Button(root, command=next_word, text="дальше", font=font, width=10)
+
+label.grid(row=0, column=0, columnspan=3)
+entry.grid(row=1, column=0, columnspan=3)
+right.grid(row=2, column=0, columnspan=3)
+buttonc.grid(row=3, column=0)
+counter.grid(row=3, column=1)
+buttonn.grid(row=3, column=2)
 
 root.bind("<Escape>", lambda x: end())
 root.bind("<Return>", lambda x: next_word() if answered else check_word())
