@@ -19,7 +19,7 @@ def check_word():
         db[word][1] += 1
         if db[word][1] >= 10:
             wordset.remove(word)
-            wordset.append(choice(tuple(filter(lambda x: x and db[x][0] and db[x][1]<10, db.keys()))))
+            wordset.append(choice(tuple(filter(lambda x: x and db[x][0] and db[x][1]<10 and x not in wordset, db.keys()))))
     else:
         entry["bg"] = "red"
         right["text"] = db[word][0]
@@ -39,7 +39,7 @@ def end():
     with open("db.py", "w") as file:
         file.write("{\n")
         for k, v in db.items():
-            file.write(f"\t'{k}': {v},\n")
+            file.write(f"\t{repr(k)}: {repr(v)},\n")
         file.write("}")
     root.destroy()
 
